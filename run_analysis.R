@@ -1,14 +1,18 @@
+library(dplyr)
+
 # 1. Fetch data about subjects and activities for each data set
 subject_test <- read.table("./test/subject_test.txt")
 subject_train <- read.table("./train/subject_train.txt")
 y_test <- read.table("./test/y_test.txt")
 y_train <- read.table("./train/y_train.txt")
 
-# 2. Fetch variable names
+# 2. Fetch variable names - remove "bad" charters
 col_names <- c("index", "name")
 features <- read.table("features.txt", col.names=col_names)
-gsub("()","", features$name)
-gsub("-","", features$name)
+features$name <- gsub("-","", features$name)
+features$name <- gsub(",","", features$name)
+features$name <- gsub("\\(","", features$name)
+features$name <- gsub("\\)","", features$name)
 
 # 3. Fetch test data and add subject and activity columns
 x_test <- read.table("./test/X_test.txt")
